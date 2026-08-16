@@ -28,3 +28,4 @@ npm run qr -- https://your-domain.com/photos/EVENTCODE wedding-qr.svg
 ```
 
 Keep the QR at least 5 cm wide, preserve its white margin, and test the printed proof from several phones before the wedding.
+# g-p-u
