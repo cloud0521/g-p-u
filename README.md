@@ -28,4 +28,22 @@ npm run qr -- https://your-domain.com/photos/EVENTCODE wedding-qr.svg
 ```
 
 Keep the QR at least 5 cm wide, preserve its white margin, and test the printed proof from several phones before the wedding.
+
+## Owner portal
+
+Owners sign in at `/owner` using an email magic link. In Supabase Authentication → URL Configuration, set the production site URL and add `https://your-domain.com/owner` as an allowed redirect URL.
+
+The owner must sign in once to create their Auth user. Then link that email to an event in the Supabase SQL Editor:
+
+```sql
+insert into public.event_owners (event_id, user_id)
+select e.id, u.id
+from public.events e
+cross join auth.users u
+where e.event_code = 'DEMO2026'
+  and lower(u.email) = lower('owner@example.com')
+on conflict do nothing;
+```
+
+Replace the event code and email before running it. The owner can then refresh `/owner` to view, approve, hide, delete, individually download, or ZIP-download their wedding photos.
 # g-p-u

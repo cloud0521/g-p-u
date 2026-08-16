@@ -1,6 +1,8 @@
-import { useEffect, useState, useRef } from 'react'
+import { lazy, Suspense, useEffect, useState, useRef } from 'react'
 import { BrowserRouter, Routes, Route, useParams, Link } from 'react-router-dom'
 import { supabase } from './supabaseClient'
+
+const OwnerPortal = lazy(() => import('./OwnerPortal'))
 
 const DEVICE_ID_KEY = 'wedding-photo-device-id'
 const MAX_PHOTOS_PER_DEVICE = 5
@@ -532,6 +534,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomeLanding />} />
         <Route path="/photos/:eventCode" element={<EventUploadPage />} />
+        <Route path="/owner" element={<Suspense fallback={<div style={styles.container}>Opening private collection…</div>}><OwnerPortal /></Suspense>} />
       </Routes>
     </BrowserRouter>
   )
