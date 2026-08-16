@@ -48,6 +48,19 @@ function HomeLanding() {
   )
 }
 
+function NotFound() {
+  return (
+    <div style={styles.container}>
+      <div style={styles.card}>
+        <div style={styles.heartIcon}>♡</div>
+        <h1 style={styles.title}>Page not found</h1>
+        <p style={styles.errorText}>Please check the invitation link and try again.</p>
+        <Link to="/" style={styles.demoButton}>RETURN HOME</Link>
+      </div>
+    </div>
+  )
+}
+
 // Browser-side image compression helper
 async function compressImage(file) {
   return new Promise((resolve, reject) => {
@@ -535,6 +548,8 @@ export default function App() {
         <Route path="/" element={<HomeLanding />} />
         <Route path="/photos/:eventCode" element={<EventUploadPage />} />
         <Route path="/owner" element={<Suspense fallback={<div style={styles.container}>Opening private collection…</div>}><OwnerPortal /></Suspense>} />
+        <Route path="/photos/:eventCode/owner" element={<Suspense fallback={<div style={styles.container}>Opening private collection…</div>}><OwnerPortal /></Suspense>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   )

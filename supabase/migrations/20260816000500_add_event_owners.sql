@@ -1,3 +1,5 @@
+-- LEGACY: this email/Auth ownership model is removed by migration 00700.
+-- Kept only because it already exists in the applied migration history.
 create table if not exists public.event_owners (
   id uuid primary key default gen_random_uuid(),
   event_id uuid not null references public.events(id) on delete cascade,

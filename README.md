@@ -31,19 +31,19 @@ Keep the QR at least 5 cm wide, preserve its white margin, and test the printed 
 
 ## Owner portal
 
-Owners sign in at `/owner` using an email magic link. In Supabase Authentication → URL Configuration, set the production site URL and add `https://your-domain.com/owner` as an allowed redirect URL.
+Owners sign in at `/photos/EVENTCODE/owner` using the event code and private owner password. Passwords are never stored in plaintext: only salted hashes appear in the database. Owner sessions expire after seven days, can be revoked by signing out, and repeated failed attempts trigger a 15-minute lockout.
 
-The owner must sign in once to create their Auth user. Then link that email to an event in the Supabase SQL Editor:
+After signing in, an owner can view, approve, hide, delete, individually download, or ZIP-download their wedding photos.
 
-```sql
-insert into public.event_owners (event_id, user_id)
-select e.id, u.id
-from public.events e
-cross join auth.users u
-where e.event_code = 'DEMO2026'
-  and lower(u.email) = lower('owner@example.com')
-on conflict do nothing;
+## Create a wedding
+
+Use one command. It creates and applies a migration containing both the event and its owner password hash:
+
+```powershell
+npm run event:create -- --code "AB7K2" --couple "Bride & Groom" --date 2026-12-20
 ```
 
-Replace the event code and email before running it. The owner can then refresh `/owner` to view, approve, hide, delete, individually download, or ZIP-download their wedding photos.
+The command prints the event code, owner URL, and generated owner password. Save the password immediately and give it privately to the owner. The plaintext password is never written to the migration or repository.
+
+Do not edit `seed_demo_event.sql` for new weddings; it only preserves the original demo event.
 # g-p-u

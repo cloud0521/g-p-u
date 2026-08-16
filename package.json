@@ -8,7 +8,9 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "qr": "node scripts/generate-qr.mjs"
+    "qr": "node scripts/generate-qr.mjs",
+    "event:create": "node scripts/create-event.mjs",
+    "db:push": "supabase db push --linked --include-all"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.3",
